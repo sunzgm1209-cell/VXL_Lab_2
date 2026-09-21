@@ -18,7 +18,7 @@ extern int timer_flags[MAX_TIMERS];
 void initTimers(void);
 int requestTimer(void);
 void setTimer(int id, int duration);
-void timer_run(void);
+void timerRun(void);
 void freeTimer(int id);
 
 #endif /* SOFTWARE_TIMER_H_ */
