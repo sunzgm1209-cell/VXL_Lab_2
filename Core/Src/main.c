@@ -58,6 +58,22 @@ static void MX_GPIO_Init(void);
 /* USER CODE BEGIN 0 */
 int led_timer_id = -1;
 int led_state = 0;
+
+void display7SEG(int num){
+	uint8_t seg7[10] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90};
+
+	if (num < 0 || num > 9){
+		return;
+	}
+
+	for (int i = 0; i < 7; ++i){
+		if ((seg7[num] >> i) & 0x01){
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 << i, GPIO_PIN_SET);
+		} else {
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 << i, GPIO_PIN_RESET);
+		}
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -108,15 +124,15 @@ int main(void)
 		  setTimer(led_timer_id, 500);
 
 		  if (led_state == 0){
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
+			  HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_SET);
+			  HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_RESET);
 
 			  display7SEG(1);
 
 			  led_state = 1;
 		  } else {
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+			  HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_RESET);
+			  HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_SET);
 
 			  display7SEG(2);
 
@@ -249,22 +265,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void display7SEG(int num){
-	static const uint8_t seg7[10] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90};
-
-	if (num < 0 || num > 9){
-		return;
-	}
-
-	for (int i = 0; i < 7; ++i){
-		if ((seg7[num] >> i) & 0x01){
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 << i, GPIO_PIN_SET);
-		} else {
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 << i, GPIO_PIN_RESET);
-		}
-	}
-}
-
 void HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef * htim){
 	if (htim->Instance == TIM2){
 		timerRun();
