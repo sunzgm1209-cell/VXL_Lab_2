@@ -1,0 +1,5 @@
+software_timer.c:13:6:initTimers	16	static
+software_timer.c:21:6:requestTimer	16	static
+software_timer.c:32:7:setTimer	16	static
+software_timer.c:39:7:timerRun	16	static
+software_timer.c:50:7:freeTimer	16	static
