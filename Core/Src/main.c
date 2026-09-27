@@ -57,7 +57,7 @@ static void MX_GPIO_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int led_timer_id = -1;
-int dot_timer_id = - 1;
+int dot_timer_id = -1;
 int led_state = 0;
 
 void display7SEG(int num){

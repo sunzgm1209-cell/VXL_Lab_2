@@ -79,7 +79,7 @@ Disassembly of section .text:
 0800014c <display7SEG>:
 /* USER CODE BEGIN 0 */
 int led_timer_id = -1;
-int dot_timer_id = - 1;
+int dot_timer_id = -1;
 int led_state = 0;
 
 void display7SEG(int num){
