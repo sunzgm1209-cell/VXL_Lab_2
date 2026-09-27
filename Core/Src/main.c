@@ -172,6 +172,7 @@ int main(void)
   led_timer_id = requestTimer();
   dot_timer_id = requestTimer();
   matrix_timer_id = requestTimer();
+  shift_timer_id = requestTimer();
 
   if (led_timer_id != -1){
 	  setTimer(led_timer_id, 50);
@@ -183,6 +184,10 @@ int main(void)
 
   if (matrix_timer_id != -1){
 	  setTimer(matrix_timer_id, 10);
+  }
+
+  if (shift_timer_id != -1){
+	  setTimer(shift_timer_id, 200);
   }
 
   updateClockBuffer();
@@ -230,6 +235,18 @@ int main(void)
 
 		  if (index_led_matrix >= MAX_LED_MATRIX){
 			  index_led_matrix = 0;
+		  }
+	  }
+
+	  if (shift_timer_id != -1 && timer_flags[shift_timer_id] == 1){
+		  setTimer(shift_timer_id, 200);
+
+		  uint8_t last_bit;
+
+		  for (int i = 0; i < MAX_LED_MATRIX; ++i){
+			  last_bit = matrixBuffer[i] & 0x01;
+
+			  matrixBuffer[i] = (last_bit << 7) |(matrixBuffer[i] >> 1);
 		  }
 	  }
     /* USER CODE END WHILE */
