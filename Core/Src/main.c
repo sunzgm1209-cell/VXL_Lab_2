@@ -60,8 +60,12 @@ int led_timer_id = -1;
 int dot_timer_id = - 1;
 
 const int MAX = 4;
-int ledBuffer[4] = {1, 2, 3, 4};
+int ledBuffer[4];
 int led_state = 0;
+
+int hour = 15;
+int minute = 8;
+int second = 50;
 
 void display7SEG(int num){
 	uint8_t seg7[10] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90};
@@ -81,25 +85,29 @@ void display7SEG(int num){
 
 void update7SEG(int index){
 	HAL_GPIO_WritePin(GPIOA, EN0_Pin | EN1_Pin | EN2_Pin | EN3_Pin, GPIO_PIN_SET);
+	display7SEG(ledBuffer[index]);
 
 	switch (index){
 	case 0:
 		HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_RESET);
-		display7SEG(1);
 		break;
 	case 1:
 		HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_RESET);
-		display7SEG(2);
 		break;
 	case 2:
 		HAL_GPIO_WritePin(GPIOA, EN2_Pin, GPIO_PIN_RESET);
-		display7SEG(3);
 		break;
 	case 3:
 		HAL_GPIO_WritePin(GPIOA, EN3_Pin, GPIO_PIN_RESET);
-		display7SEG(4);
 		break;
 	}
+}
+
+void updateClockBuffer(){
+	ledBuffer[0] = hour / 10;
+	ledBuffer[1] = hour % 10;
+	ledBuffer[2] = minute / 10;
+	ledBuffer[3] = minute % 10;
 }
 /* USER CODE END 0 */
 
@@ -138,12 +146,14 @@ int main(void)
   dot_timer_id = requestTimer();
 
   if (led_timer_id != -1){
-	  setTimer(led_timer_id, 250);
+	  setTimer(led_timer_id, 50);
   }
 
   if (dot_timer_id != -1){
 	  setTimer(dot_timer_id, 1000);
   }
+
+  updateClockBuffer();
 
   HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
@@ -153,7 +163,7 @@ int main(void)
   while (1)
   {
 	  if (led_timer_id != -1 && timer_flags[led_timer_id] == 1){
-		  setTimer(led_timer_id, 250);
+		  setTimer(led_timer_id, 50);
 		  update7SEG(led_state++);
 		  if (led_state >= MAX){
 			  led_state = 0;
@@ -164,6 +174,21 @@ int main(void)
 		  setTimer(dot_timer_id, 1000);
 
 		  HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
+
+		  second++;
+		  if (second >= 60){
+			  minute++;
+			  second = 0;
+		  }
+		  if (minute >= 60){
+			  hour++;
+			  minute = 0;
+		  }
+		  if (hour >= 24){
+			  hour = 0;
+		  }
+
+		  updateClockBuffer();
 	  }
     /* USER CODE END WHILE */
 
