@@ -149,7 +149,7 @@ int main(void)
 		  } else {
 			  HAL_GPIO_WritePin(GPIOA, EN3_Pin, GPIO_PIN_RESET);
 
-			  display7SEG(4);
+			  display7SEG(0);
 			  led_state = 0;
 		  }
 	  }

@@ -326,8 +326,8 @@ int main(void)
  80002d0:	4814      	ldr	r0, [pc, #80]	; (8000324 <main+0x150>)
  80002d2:	f000 fd61 	bl	8000d98 <HAL_GPIO_WritePin>
 
-			  display7SEG(4);
- 80002d6:	2004      	movs	r0, #4
+			  display7SEG(0);
+ 80002d6:	2000      	movs	r0, #0
  80002d8:	f7ff ff38 	bl	800014c <display7SEG>
 			  led_state = 0;
  80002dc:	4b12      	ldr	r3, [pc, #72]	; (8000328 <main+0x154>)
