@@ -173,7 +173,7 @@ int main(void)
   matrix_timer_id = requestTimer();
 
   if (led_timer_id != -1){
-	  setTimer(led_timer_id, 50);
+	  setTimer(led_timer_id, 250);
   }
 
   if (dot_timer_id != -1){
@@ -194,7 +194,7 @@ int main(void)
   while (1)
   {
 	  if (led_timer_id != -1 && timer_flags[led_timer_id] == 1){
-		  setTimer(led_timer_id, 50);
+		  setTimer(led_timer_id, 250);
 		  update7SEG(led_state++);
 		  if (led_state >= MAX){
 			  led_state = 0;
