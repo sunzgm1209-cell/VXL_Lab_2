@@ -450,10 +450,10 @@ int main(void)
  80003cc:	681b      	ldr	r3, [r3, #0]
  80003ce:	f1b3 3fff 	cmp.w	r3, #4294967295
  80003d2:	d005      	beq.n	80003e0 <main+0x58>
-	  setTimer(led_timer_id, 50);
+	  setTimer(led_timer_id, 250);
  80003d4:	4b72      	ldr	r3, [pc, #456]	; (80005a0 <main+0x218>)
  80003d6:	681b      	ldr	r3, [r3, #0]
- 80003d8:	2132      	movs	r1, #50	; 0x32
+ 80003d8:	21fa      	movs	r1, #250	; 0xfa
  80003da:	4618      	mov	r0, r3
  80003dc:	f000 fa36 	bl	800084c <setTimer>
   }
@@ -519,10 +519,10 @@ int main(void)
  800043e:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
  8000442:	2b01      	cmp	r3, #1
  8000444:	d115      	bne.n	8000472 <main+0xea>
-		  setTimer(led_timer_id, 50);
+		  setTimer(led_timer_id, 250);
  8000446:	4b56      	ldr	r3, [pc, #344]	; (80005a0 <main+0x218>)
  8000448:	681b      	ldr	r3, [r3, #0]
- 800044a:	2132      	movs	r1, #50	; 0x32
+ 800044a:	21fa      	movs	r1, #250	; 0xfa
  800044c:	4618      	mov	r0, r3
  800044e:	f000 f9fd 	bl	800084c <setTimer>
 		  update7SEG(led_state++);
